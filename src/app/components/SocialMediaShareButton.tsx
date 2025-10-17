@@ -3,6 +3,7 @@
 import { type RefObject, useState } from "react";
 import { toBlob } from "html-to-image";
 import Button from "./Button";
+import { sourceCodePro } from "../utils/fonts";
 
 interface Props {
     cardRef: RefObject<HTMLDivElement | null>,
@@ -13,25 +14,31 @@ interface Props {
 
 const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Props) => {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState<{ variant: string, error: unknown }>();
+    const [cacheBlob, setCacheBlob] = useState<{ variant: string, blob: Blob | null }>();
 
     const webShare = async (variant: string) => {
         try {
-            setLoading(true);
+            let blob = cacheBlob?.variant === variant ? cacheBlob.blob : null;
 
-            const ref = variant === 'story' ? storyCardRef : cardRef;
+            if (!blob) {
+                const ref = variant === 'story' ? storyCardRef : cardRef;
 
-            if (!ref.current) return;
+                if (!ref.current) return;
 
-            const blob = await toBlob(ref.current, {
-                cacheBust: true,
-                pixelRatio: 2,
-                quality: 1,
-            });
+                setLoading(true);
+
+                blob = await toBlob(ref.current, {
+                    cacheBust: true,
+                    pixelRatio: 2,
+                    quality: 1,
+                });
+
+                setCacheBlob({ variant, blob });
+                setLoading(false);
+            }
 
             if (!blob) return;
-
-            setLoading(false);
 
             const file = new File([blob], `share-${variant}.png`, { type: "image/png" });
 
@@ -43,17 +50,22 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Pro
                 });
             }
 
-        } catch (err) {
-            setError(`erro! ${err}`);
-            console.error("Web Share API failed", err);
+            setError(undefined);
+        } catch (err: unknown) {
+            setLoading(false);
+            setError({ variant, error: err });
         }
     }
 
     return (
         <>
-            {error && <p>{error}</p>}
-            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('square')}>{loading ? 'Loading...' : 'Share to social media (square)'}</Button>
-            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('story')}>{loading ? 'Loading...' : 'Share to social media (Instagram story)'}</Button>
+            {error && (
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className}` : `tloas-font ${textStyle}`} uppercase text-sm text-center`}>
+                    An error occurred when sharing! Try again or download image to share.
+                </span>
+            )}
+            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('square')}>{loading ? 'Loading...' : error?.variant === 'square' ? 'Try sharing again' : 'Share to social media (square)'}</Button>
+            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('story')}>{loading ? 'Loading...' : error?.variant === 'story' ? 'Try sharing again' : 'Share to social media (Instagram story)'}</Button>
         </>
     );
 }
