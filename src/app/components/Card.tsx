@@ -9,11 +9,11 @@ interface SongDisplayProps {
     textStyle: string,
     album: string,
     style: string,
-    size: number,
+    size?: number,
     variant: string,
 }
 
-const SongDisplay = ({ title, textStyle, album, style, size, variant }: SongDisplayProps) => (
+const SongDisplay = ({ title, textStyle, album, style, variant, size = variant === 'story' ? 400 : 240 }: SongDisplayProps) => (
     <div className={`flex gap-4 text-center justify-center items-center ${album === 'TTPD' ? 'flex-col' : 'flex-col-reverse'}`}>
         <img
             src={album === 'TTPD' ? "/ttpd_anthology.jpg" : "/tloas.jpg"}
@@ -23,7 +23,7 @@ const SongDisplay = ({ title, textStyle, album, style, size, variant }: SongDisp
             id={album}
             className={style === 'TTPD' ? album === 'TTPD' ? 'ttpd-border-simple' : 'grayscale' : ''}
         />
-        <span className={`${textStyle} text-bold ${variant === 'story' ? 'text-4-5xl' : 'text-4xl'}`}>{title}</span>
+        <span className={`${textStyle} text-bold ${variant === 'story' ? 'text-4-5xl' : 'text-5xl'}`}>{title}</span>
     </div>
 );
 
@@ -50,10 +50,10 @@ const FloatingImage = ({ top, left, right, bottom, size, animationName, src, sty
     />
 );
 
-const Badge = ({ style, children }: { style: string, children: ReactNode }) => (
+const Badge = ({ style, children, capitalize, variant }: { style: string, children: ReactNode, variant: string, capitalize?: boolean }) => (
     <div className={style === 'TLOAS' ? "tloas-border mt-4" : "mt-8 ttpd-border font-bold"}>
-        <div className="flex text-center py-2 px-8">
-            <span className={`w-full text-2xl text-shadow ${style === 'TLOAS' ? oswald.className : sourceCodePro.className} ${style === 'TLOAS' ? 'text-white' : ''}`}>{children}</span>
+        <div className="flex text-center py-2 px-6">
+            <span className={`w-full ${variant === 'story' && style === 'TLOAS' ? 'text-2xl' : 'text-2xl'} text-shadow ${capitalize ? 'uppercase' : 'default-capitalization'} ${style === 'TLOAS' ? oswald.className : sourceCodePro.className} ${style === 'TLOAS' ? 'text-white' : ''}`}>{children}</span>
         </div>
     </div>
 );
@@ -79,18 +79,18 @@ const Card = ({ ref, style, displayAnimation, textStyle, day, month, variant }: 
                         {displayAnimation && (
                             <div>
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-4"} size={200} style={style} top={variant === 'story' ? "24rem" : "12rem"} left="3rem" />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={200} style={style} top={variant === 'story' ? "40rem" : "24rem"} right="5rem" />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={200} style={style} top={variant === 'story' ? "44rem" : "24rem"} right={variant ==="story" ? "2rem" : "5rem"} />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-3"} size={200} style={style} bottom="-3rem" right="-4rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={100} style={style} top={variant === 'story' ? "2rem" : "25rem"} left="2.5rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={75} style={style} top={variant === 'story' ? "1rem" : "18rem"} left={variant === 'story' ? "40rem" : "15rem"} />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-2"} size={75} style={style} top={variant === 'story' ? "48rem" : "36rem"} left="4rem" />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-3"} size={100} style={style} bottom="16rem" left="12rem" />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-2"} size={75} style={style} top={variant === 'story' ? "48rem" : "44rem"} left="4rem" />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-3"} size={100} style={style} bottom="16rem" left={variant === 'story' ? "10rem" : "16rem"} />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-4"} size={100} style={style} bottom="14rem" left="-2rem" />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={75} style={style} bottom="4rem" left="4rem" />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={75} style={style} bottom={variant === "story" ? "4rem" : "8rem"} left="4rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={100} style={style} top={variant === 'story' ? '16rem' : "8rem"} right="3.5rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-3"} size={100} style={style} bottom="28rem" right="-1rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-3"} size={75} style={style} bottom="12rem" right="3.5rem" />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={100} style={style} bottom="8rem" right="9rem" />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={100} style={style} bottom={variant === 'story' ? "4rem" : "8rem"} right="9rem" />
                             </div>
                         )}
 
@@ -106,14 +106,14 @@ const Card = ({ ref, style, displayAnimation, textStyle, day, month, variant }: 
                             </span>
                         </div>
                         <div className="flex flex-col gap-7 p-6 w-[90%]">
-                            <SongDisplay variant="story" size={variant === 'story' ? 400 : 240} style={style} title={ttpdTracks[day]} album="TTPD" textStyle={`${style === 'TLOAS' ? 'text-white' : 'ttpd-text'} ${crimsonText.className}`} />
+                            <SongDisplay variant={variant} style={style} title={ttpdTracks[day]} album="TTPD" textStyle={`${style === 'TLOAS' ? 'text-white' : 'ttpd-text'} ${crimsonText.className}`} />
                             <div className={`mashup-divider ${style === 'TLOAS' ? 'tloas-accent' : 'ttpd-text'}`}><X /></div>
-                            <SongDisplay variant="story" size={variant === 'story' ? 400 : 240} style={style} title={tloasTracks[month]} album="TLOAS" textStyle={`${style === 'TLOAS' ? 'tloas-text tloas-text-mask' : 'ttpd-text'} tloas-font ${oswald.className}`} />
+                            <SongDisplay variant={variant} style={style} title={tloasTracks[month]} album="TLOAS" textStyle={`${style === 'TLOAS' ? 'tloas-text tloas-text-mask' : 'ttpd-text'} tloas-font ${oswald.className}`} />
                         </div>
 
-                        <div className={`flex ${variant === 'story' ? 'flex-col mt-4' : 'gap-8'}`}>
-                            <Badge style={style}>@jrobsonjr</Badge>
-                            <Badge style={style}>Share yours at https://ttpd-tloas.vercel.app/</Badge>
+                        <div className={`flex ${variant === 'story' ? 'gap-4' : 'gap-8'}`}>
+                            <Badge variant={variant} style={style}>#TTPDxTLOAS</Badge>
+                            <Badge variant={variant} capitalize style={style}>Share yours at https://ttpd-tloas.vercel.app/</Badge>
                         </div>
                     </div>
                 </div>

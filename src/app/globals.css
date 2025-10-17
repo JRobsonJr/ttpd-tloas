@@ -412,3 +412,7 @@ ul {
 .text-shadow, button.tloas-button:hover, a.tloas-button:hover {
   text-shadow: 1px 1px var(--ttpda-background);
 }
+
+.default-capitalization {
+  text-transform: none;
+}
