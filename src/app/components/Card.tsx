@@ -23,7 +23,7 @@ const SongDisplay = ({ title, textStyle, album, style, variant, size = variant =
             id={album}
             className={style === 'TTPD' ? album === 'TTPD' ? 'ttpd-border-simple' : 'grayscale' : ''}
         />
-        <span className={`${textStyle} text-bold ${variant === 'story' ? 'text-4-5xl' : 'text-5xl'}`}>{title}</span>
+        <span className={`${textStyle} whitespace-nowrap text-bold ${variant === 'story' ? 'text-4-5xl' : 'text-5xl'}`}>{title}</span>
     </div>
 );
 
@@ -79,7 +79,7 @@ const Card = ({ ref, style, displayAnimation, textStyle, day, month, variant }: 
                         {displayAnimation && (
                             <div>
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-4"} size={200} style={style} top={variant === 'story' ? "24rem" : "12rem"} left="3rem" />
-                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={200} style={style} top={variant === 'story' ? "44rem" : "24rem"} right={variant ==="story" ? "2rem" : "5rem"} />
+                                <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={200} style={style} top={variant === 'story' ? "44rem" : "24rem"} right={variant === "story" ? "2rem" : "5rem"} />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_3.png'} animationName={"move-3"} size={200} style={style} bottom="-3rem" right="-4rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_2.png'} animationName={"move-2"} size={100} style={style} top={variant === 'story' ? "2rem" : "25rem"} left="2.5rem" />
                                 <FloatingImage src={style === 'TLOAS' ? '/star.png' : '/paper_1.png'} animationName={"move-1"} size={75} style={style} top={variant === 'story' ? "1rem" : "18rem"} left={variant === 'story' ? "40rem" : "15rem"} />
@@ -94,10 +94,13 @@ const Card = ({ ref, style, displayAnimation, textStyle, day, month, variant }: 
                             </div>
                         )}
 
-                        <span className={`tracking-wide ${variant === 'story' ? 'text-6xl pb-8' : 'text-7xl pb-5'} text-center ${textStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font' : ''}`}>
-                            Everyone has a birthday<br /> TTPD x TLOAS mashup,
+                        <span className={`tracking-wide whitespace-nowrap ${variant === 'story' ? 'text-6xl pb-8' : 'text-6xl pb-2'} text-center ${textStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font' : ''}`}>
+                            Everyone has a birthday
                         </span>
-                        <span className={`${variant === 'story' ? 'text-5xl pb-7' : 'text-3xl pb-4'} ${textStyle} ${style === 'TLOAS' ? 'tloas-font tloas-accent' : ''}`}>
+                        <span className={`tracking-wide whitespace-nowrap ${variant === 'story' ? 'text-6xl pb-8' : 'text-6xl pb-5'} text-center ${textStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font' : ''}`}>
+                            TTPD x TLOAS mashup,
+                        </span>
+                        <span className={`${variant === 'story' ? 'text-5xl pb-7' : 'text-3xl pb-4'} whitespace-nowrap ${textStyle} ${style === 'TLOAS' ? 'tloas-font tloas-accent' : ''}`}>
                             and mine is
                         </span>
                         <div className={`px-8 py-2 ${variant === 'story' ? 'mb-10' : ''} ${style === 'TLOAS' ? "tloas-badge" : "ttpd-border"}`}>
