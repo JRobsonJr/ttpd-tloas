@@ -53,7 +53,7 @@ const FloatingImage = ({ top, left, right, bottom, size, animationName, src, sty
 const Badge = ({ style, children }: { style: string, children: ReactNode }) => (
     <div className={style === 'TLOAS' ? "tloas-border mt-4" : "mt-8 ttpd-border font-bold"}>
         <div className="flex text-center py-2 px-8">
-            <span className={`w-full text-2xl ${style === 'TLOAS' ? oswald.className : sourceCodePro.className} ${style === 'TLOAS' ? 'text-white' : ''}`}>{children}</span>
+            <span className={`w-full text-2xl text-shadow ${style === 'TLOAS' ? oswald.className : sourceCodePro.className} ${style === 'TLOAS' ? 'text-white' : ''}`}>{children}</span>
         </div>
     </div>
 );
@@ -113,7 +113,7 @@ const Card = ({ ref, style, displayAnimation, textStyle, day, month, variant }: 
 
                         <div className={`flex ${variant === 'story' ? 'flex-col mt-4' : 'gap-8'}`}>
                             <Badge style={style}>@jrobsonjr</Badge>
-                            <Badge style={style}>Share yours at...</Badge>
+                            <Badge style={style}>Share yours at https://ttpd-tloas.vercel.app/</Badge>
                         </div>
                     </div>
                 </div>
