@@ -7,6 +7,7 @@ import { getLastDayOfMonth } from "./utils";
 import { crimsonText, oswald, sourceCodePro } from "./utils/fonts";
 import Card from "./components/Card";
 import DateInput from "./components/DateInput";
+import UploadAndShare from "./components/Upload";
 
 const Button = ({ style, handleClick, textStyle, children, disabled }: { style: string, handleClick: () => void, textStyle: string, children: ReactNode, disabled?: boolean }) => (
   <div className={style === 'TLOAS' ? "tloas-border p-1" : ""}>
@@ -164,6 +165,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <UploadAndShare htmlRef={cardRef} />
         </div>
       )}
     </div >
