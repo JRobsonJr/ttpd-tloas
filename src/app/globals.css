@@ -254,7 +254,7 @@ button {
   transition: 0.5s;
 }
 
-button.tloas-button:hover, a.tloas-button:hover {
+.tloas-button:disabled, .tloas-button:hover, .tloas-button:active, .tloas-button:focus {
   background-color: transparent;
   color: white;
 }
@@ -409,8 +409,12 @@ ul {
   list-style-type: disc;
 }
 
-.text-shadow, button.tloas-button:hover, a.tloas-button:hover {
+.text-shadow, button.tloas-button:hover, button.tloas-button:focus, a.tloas-button:focus, a.tloas-button:hover {
   text-shadow: 1px 1px var(--ttpda-background);
+}
+
+.tloas-button:disabled {
+
 }
 
 .default-capitalization {

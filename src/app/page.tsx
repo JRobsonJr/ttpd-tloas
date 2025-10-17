@@ -105,21 +105,47 @@ export default function Home() {
           <Card ref={cardRef} day={day} month={month} displayAnimation={displayAnimation} style={style} textStyle={mainTextStyle} variant="card" />
 
           <div className="flex flex-col gap-4 p-4 items-center">
-            <span className={`text-3xl text-center lg:text-5xl text-center ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font uppercase' : 'font-bold'}`}>Personalize and share your mashup!</span>
-            <div className="flex flex-col gap-3 pb-4 w-fit">
-              <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('square')}>
-                {downloading ? "Downloading..." : "Download image (Square)"}
-              </Button>
-              <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('story')}>
-                {downloading ? "Downloading..." : "Download image (Instagram Story)"}
-              </Button>
+            <span className={`text-3xl text-center lg:text-5xl text-center ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font uppercase' : 'font-bold'}`}>Customize and share your mashup!</span>
+            <div className="flex flex-col gap-4 pb-4 w-fit">
+              <div className="flex flex-col items-center w-full">
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
+                  Customize
+                </span>
+                <div className="flex grid grid-cols-2 gap-2 w-full">
+                  <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
+                    {style === 'TTPD' ? 'TLOAS' : 'TTPD'} style
+                  </Button>
+                  <Button style={style} textStyle={mainTextStyle} handleClick={() => setDisplayAnimation(!displayAnimation)}>
+                    {displayAnimation ? 'Hide' : 'Display'} {style === 'TTPD' ? 'papers' : 'stars'}
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-col items-center w-full">
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
+                  Download
+                </span>
+                <div className={`flex grid ${downloading ? 'grid-cols-1' : 'grid-cols-2'} gap-2 w-full`}>
+                  {downloading ? (
+                    <Button disabled style={style} textStyle={mainTextStyle} handleClick={() => { }}>
+                      Downloading...
+                    </Button>
+                  ) : (
+                    <>
+                      <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('square')}>
+                        {downloading ? "Downloading..." : "Square (1:1)"}
+                      </Button>
+                      <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('story')}>
+                        {downloading ? "Downloading..." : "Story (9:16)"}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+
               <SocialMediaShareButton displayElements={displayAnimation} style={style} textStyle={mainTextStyle} cardRef={cardRef} storyCardRef={storyCardRef} />
-              <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
-                Switch to {style === 'TTPD' ? 'TLOAS' : 'TTPD'} style
-              </Button>
-              <Button style={style} textStyle={mainTextStyle} handleClick={() => setDisplayAnimation(!displayAnimation)}>
-                {displayAnimation ? 'Hide' : 'Display'} {style === 'TTPD' ? 'papers' : 'stars'}
-              </Button>
+
+              <hr className="my-4 opacity-50" />
+
               <div className="flex flex-col items-center w-full">
                 <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
                   Enjoyed this experience?

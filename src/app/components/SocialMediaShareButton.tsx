@@ -20,6 +20,7 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style, displ
 
     useEffect(() => {
         setCacheBlob(undefined);
+        setError(undefined);
     }, [style, displayElements]);
 
     const webShare = async (variant: string) => {
@@ -40,6 +41,7 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style, displ
                 });
 
                 setCacheBlob({ variant, blob });
+                throw new Error('vish')
                 setLoading(false);
             }
 
@@ -64,13 +66,35 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style, displ
 
     return (
         <>
-            {error && (
-                <span className={`${style === 'TTPD' ? `${sourceCodePro.className}` : `tloas-font ${textStyle}`} uppercase text-sm text-center`}>
-                    An error occurred when sharing! Try again or download image to share.
+            <div className="flex flex-col items-center w-full">
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${textStyle} mb-1`} uppercase text-sm`}>
+                    Share
                 </span>
-            )}
-            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('square')}>{loading ? 'Loading...' : error?.variant === 'square' ? 'Try sharing again' : 'Share to social media (square)'}</Button>
-            <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('story')}>{loading ? 'Loading...' : error?.variant === 'story' ? 'Try sharing again' : 'Share to social media (Instagram story)'}</Button>
+                <div className="flex grid grid-cols-2 gap-2 w-full">
+                </div>
+
+                <div className={`flex grid ${loading ? 'grid-cols-1' : 'grid-cols-2'} gap-2 w-full`}>
+                    {loading ? (
+                        <Button disabled style={style} textStyle={textStyle} handleClick={() => { }}>
+                            Loading...
+                        </Button>
+                    ) : (
+                        <>
+                            <Button style={style} textStyle={textStyle} handleClick={() => webShare('square')}>
+                                {error?.variant === 'square' ? 'Try again' : 'Square (1:1)'}
+                            </Button>
+                            <Button style={style} textStyle={textStyle} handleClick={() => webShare('story')}>
+                                {error?.variant === 'story' ? 'Try again' : 'Story (9:16)'}
+                            </Button>
+                        </>
+                    )}
+                </div>
+                {error && (
+                    <span className={`${style === 'TTPD' ? `${sourceCodePro.className} text-gray-400` : `tloas-font ${textStyle} text-gray-600`} uppercase text-xs text-center mt-1`}>
+                        An error occurred! Please, try again. If the error persists, download the image to share.
+                    </span>
+                )}
+            </div>
         </>
     );
 }
