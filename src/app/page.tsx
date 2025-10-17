@@ -8,7 +8,7 @@ import { crimsonText, oswald, sourceCodePro } from "./utils/fonts";
 import Card from "./components/Card";
 import DateInput from "./components/DateInput";
 
-const Button = ({ style, handleClick, textStyle, children, disabled }: { style: string, handleClick: any, textStyle: string, children: ReactNode, disabled?: boolean }) => (
+const Button = ({ style, handleClick, textStyle, children, disabled }: { style: string, handleClick: () => void, textStyle: string, children: ReactNode, disabled?: boolean }) => (
   <div className={style === 'TLOAS' ? "tloas-border p-1" : ""}>
     <button disabled={disabled} onClick={handleClick} className={`py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${textStyle} w-full uppercase sm:text-xl cursor-pointer`}>
       {children}
@@ -34,8 +34,8 @@ export default function Home() {
     setDisplayResult(false);
   }, [month, day]);
 
-  const cardRef = useRef<HTMLElement>(null);
-  const storyCardRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const storyCardRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async (variant: string) => {
     setDownloading(true);
