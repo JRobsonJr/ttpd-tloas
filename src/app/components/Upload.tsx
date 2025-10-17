@@ -83,6 +83,42 @@ export default function HtmlToImageUpload({ htmlRef }: { htmlRef: RefObject<HTML
         }
     };
 
+    async function shareToInstagramStories() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile && uploadedUrl) {
+            const instagramURL = `instagram://story-camera?source_url=${encodeURIComponent(uploadedUrl)}`;
+
+            const timeout = setTimeout(async () => {
+                await fallbackWebShare(uploadedUrl);
+            }, 1500);
+
+            window.location.href = instagramURL;
+            return;
+        }
+        if (!uploadedUrl) return;
+
+        await fallbackWebShare(uploadedUrl);
+    }
+
+    async function fallbackWebShare(imageUrl: string) {
+        try {
+            const blob = await fetch(imageUrl).then(r => r.blob());
+            const file = new File([blob], "story.png", { type: blob.type });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: "Share to Instagram Stories",
+                    text: "Share this image to your Instagram story!",
+                });
+            } else {
+            }
+        } catch (err) {
+            console.error("Web Share API failed", err);
+        }
+    }
+
     return (
         <div className="space-y-4">
             <div className="flex gap-2">
@@ -93,7 +129,7 @@ export default function HtmlToImageUpload({ htmlRef }: { htmlRef: RefObject<HTML
                     Upload as PNG
                 </button>
                 <button
-                    onClick={shareToInstagram}
+                    onClick={shareToInstagramStories}
                     className="px-4 py-2"
                     disabled={!uploadedUrl}
                 >
