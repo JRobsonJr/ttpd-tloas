@@ -13,6 +13,7 @@ interface Props {
 
 const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Props) => {
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const webShare = async (variant: string) => {
         try {
@@ -21,17 +22,17 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Pro
             const ref = variant === 'story' ? storyCardRef : cardRef;
 
             if (!ref.current) return;
-            
+
             const blob = await toBlob(ref.current, {
                 cacheBust: true,
                 pixelRatio: 2,
                 quality: 1,
             });
-            
+
             if (!blob) return;
 
             setLoading(false);
-            // const blob = await fetch(uploadedUrl).then(r => r.blob());
+
             const file = new File([blob], `share-${variant}.png`, { type: "image/png" });
 
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -43,12 +44,14 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Pro
             }
 
         } catch (err) {
+            setError(`erro! ${err}`);
             console.error("Web Share API failed", err);
         }
     }
 
     return (
         <>
+            {error && <p>{error}</p>}
             <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('square')}>{loading ? 'Loading...' : 'Share to social media (square)'}</Button>
             <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('story')}>{loading ? 'Loading...' : 'Share to social media (Instagram story)'}</Button>
         </>
