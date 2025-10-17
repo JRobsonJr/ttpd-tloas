@@ -1,21 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toPng } from 'html-to-image';
 import { getLastDayOfMonth } from "./utils";
 import { crimsonText, oswald, sourceCodePro } from "./utils/fonts";
 import Card from "./components/Card";
 import DateInput from "./components/DateInput";
-import UploadAndShare from "./components/Upload";
-
-const Button = ({ style, handleClick, textStyle, children, disabled }: { style: string, handleClick: () => void, textStyle: string, children: ReactNode, disabled?: boolean }) => (
-  <div className={style === 'TLOAS' ? "tloas-border p-1" : ""}>
-    <button disabled={disabled} onClick={handleClick} className={`py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${textStyle} w-full uppercase sm:text-xl cursor-pointer`}>
-      {children}
-    </button>
-  </div>
-);
+import SocialMediaShareButton from "./components/SocialMediaShareButton";
+import Button from "./components/Button";
 
 export default function Home() {
   const [month, setMonth] = useState<number>(1);
@@ -64,10 +57,6 @@ export default function Home() {
     }, 250);
   };
 
-  const storeBirthday = () => {
-
-  };
-
   return (
     <div className={`items-center justify-items-center ${style === 'TLOAS' ? 'tloas-style' : 'ttpd-style'}`}>
       <div className="flex flex-col gap-8 items-center justify-center min-h-screen p-4">
@@ -98,7 +87,6 @@ export default function Home() {
           </div>
           <Button style={style} textStyle={mainTextStyle} handleClick={() => {
             setDisplayResult(true);
-            storeBirthday();
             scrollToResult();
           }} disabled={day == 0 || month == 0}>
             {day === 0 || month === 0 ? 'Select your birth date' : 'Find out your mashup'}
@@ -125,6 +113,7 @@ export default function Home() {
               <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('story')}>
                 {downloading ? "Downloading..." : "Download image (Instagram Story)"}
               </Button>
+              <SocialMediaShareButton style={style} textStyle={mainTextStyle} cardRef={cardRef} storyCardRef={storyCardRef} />
               <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
                 Switch to {style === 'TTPD' ? 'TLOAS' : 'TTPD'} style
               </Button>
@@ -132,7 +121,7 @@ export default function Home() {
                 {displayAnimation ? 'Hide' : 'Display'} {style === 'TTPD' ? 'papers' : 'stars'}
               </Button>
               <div className="flex flex-col items-center w-full">
-                <span className={`${style === 'TTPD' ? sourceCodePro.className : `tloas-font ${mainTextStyle}`} uppercase mb-1 text-sm`}>
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
                   Enjoyed this experience?
                 </span>
                 <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
@@ -165,7 +154,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <UploadAndShare htmlRef={cardRef} />
         </div>
       )}
     </div >

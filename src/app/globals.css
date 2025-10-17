@@ -416,3 +416,7 @@ ul {
 .default-capitalization {
   text-transform: none;
 }
+
+button:disabled, button:disabled:hover {
+  cursor: default !important;
+}
