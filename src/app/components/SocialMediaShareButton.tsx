@@ -41,7 +41,6 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style, displ
                 });
 
                 setCacheBlob({ variant, blob });
-                throw new Error('vish')
                 setLoading(false);
             }
 
