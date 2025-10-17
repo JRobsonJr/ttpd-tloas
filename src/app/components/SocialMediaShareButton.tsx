@@ -48,10 +48,10 @@ const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Pro
     }
 
     return (
-        <div className="space-y-4">
+        <>
             <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('square')}>{loading ? 'Loading...' : 'Share to social media (square)'}</Button>
             <Button style={style} textStyle={textStyle} disabled={loading} handleClick={() => webShare('story')}>{loading ? 'Loading...' : 'Share to social media (Instagram story)'}</Button>
-        </div>
+        </>
     );
 }
 
