@@ -131,6 +131,17 @@ export default function Home() {
                 {displayAnimation ? 'Hide' : 'Display'} {style === 'TTPD' ? 'papers' : 'stars'}
               </Button>
               <div className="flex flex-col items-center w-full">
+                <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
+                  <a
+                    href="https://www.instagram.com/stories/upload?file=https://imgur.com/0ETawTJ" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block text-center w-full py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${mainTextStyle} w-full uppercase sm:text-xl cursor-pointer`}>
+                    Share to Instagram Story
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col items-center w-full">
                 <span className={`${style === 'TTPD' ? sourceCodePro.className : `tloas-font ${mainTextStyle}`} uppercase mb-1 text-sm`}>
                   Enjoyed this experience?
                 </span>
