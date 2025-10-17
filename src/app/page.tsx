@@ -113,7 +113,7 @@ export default function Home() {
               <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('story')}>
                 {downloading ? "Downloading..." : "Download image (Instagram Story)"}
               </Button>
-              <SocialMediaShareButton style={style} textStyle={mainTextStyle} cardRef={cardRef} storyCardRef={storyCardRef} />
+              <SocialMediaShareButton displayElements={displayAnimation} style={style} textStyle={mainTextStyle} cardRef={cardRef} storyCardRef={storyCardRef} />
               <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
                 Switch to {style === 'TTPD' ? 'TLOAS' : 'TTPD'} style
               </Button>

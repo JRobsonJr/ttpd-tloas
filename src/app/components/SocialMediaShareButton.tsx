@@ -1,6 +1,6 @@
 "use client";
 
-import { type RefObject, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import { toBlob } from "html-to-image";
 import Button from "./Button";
 import { sourceCodePro } from "../utils/fonts";
@@ -10,12 +10,17 @@ interface Props {
     storyCardRef: RefObject<HTMLDivElement | null>,
     textStyle: string,
     style: string,
+    displayElements: boolean,
 }
 
-const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style }: Props) => {
+const SocialMediaShareButton = ({ cardRef, storyCardRef, textStyle, style, displayElements }: Props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<{ variant: string, error: unknown }>();
     const [cacheBlob, setCacheBlob] = useState<{ variant: string, blob: Blob | null }>();
+
+    useEffect(() => {
+        setCacheBlob(undefined);
+    }, [style, displayElements]);
 
     const webShare = async (variant: string) => {
         try {
