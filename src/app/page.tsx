@@ -1,103 +1,171 @@
+"use client";
+
 import Image from "next/image";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { toPng } from 'html-to-image';
+import { getLastDayOfMonth } from "./utils";
+import { crimsonText, oswald, sourceCodePro } from "./utils/fonts";
+import Card from "./components/Card";
+import DateInput from "./components/DateInput";
+
+const Button = ({ style, handleClick, textStyle, children, disabled }: { style: string, handleClick: any, textStyle: string, children: ReactNode, disabled?: boolean }) => (
+  <div className={style === 'TLOAS' ? "tloas-border p-1" : ""}>
+    <button disabled={disabled} onClick={handleClick} className={`py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${textStyle} w-full uppercase sm:text-xl cursor-pointer`}>
+      {children}
+    </button>
+  </div>
+);
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [month, setMonth] = useState<number>(1);
+  const [day, setDay] = useState<number>(1);
+  const [style, setStyle] = useState('TLOAS');
+  const [displayAnimation, setDisplayAnimation] = useState(true);
+  const [displayResult, setDisplayResult] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const mainTextStyle = style === 'TLOAS' ? oswald.className : crimsonText.className;
+
+  useEffect(() => {
+    setDay(Math.min(day, getLastDayOfMonth(month)));
+  }, [month]);
+
+  useEffect(() => {
+    setDisplayResult(false);
+  }, [month, day]);
+
+  const cardRef = useRef<HTMLElement>(null);
+  const storyCardRef = useRef<HTMLElement>(null);
+
+  const handleDownload = async (variant: string) => {
+    setDownloading(true);
+
+    const dataUrl = await toPng((variant === 'story' ? storyCardRef : cardRef).current as HTMLElement, {
+      cacheBust: true,
+      pixelRatio: 2,
+      quality: 1,
+    });
+
+    const link = document.createElement('a');
+    link.download = `tloas-ttpd-mashup-${variant}.png`;
+    link.href = dataUrl;
+    link.click();
+
+    setDownloading(false);
+  };
+
+  const handleChangeStyle = () => setStyle(style === 'TLOAS' ? 'TTPD' : 'TLOAS');
+
+  const scrollToResult = () => {
+    setTimeout(() => {
+      const element = document.getElementById('result');
+      element?.scrollIntoView({ behavior: "smooth" });
+    }, 250);
+  };
+
+  const storeBirthday = () => {
+
+  };
+
+  return (
+    <div className={`items-center justify-items-center ${style === 'TLOAS' ? 'tloas-style' : 'ttpd-style'}`}>
+      <div className="flex flex-col gap-8 items-center justify-center min-h-screen p-4">
+        <div className="flex flex-col hidden sm:visible gap-4">
+          <Image
+            src="/ttpd_anthology.jpg"
+            alt="TTPD Anthology album cover"
+            width={300}
+            height={300}
+            priority
+            className={style === "TTPD" ? "ttpd-border-simple" : ""}
+          />
+          <Image
+            src="/tloas.jpg"
+            alt="TLOAS album cover"
+            width={300}
+            height={300}
+            priority
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <span className={`text-2xl text-center sm:text-5xl lg:text-7xl ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font uppercase' : 'font-bold'}`}>Everyone has a birthday <br /> TTPD x TLOAS mashup.</span>
+
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-2 mb-4">
+            <DateInput style={style} textStyle={mainTextStyle} label="Month" value={month} setValue={setMonth} minValue={1} maxValue={12} />
+            <DateInput style={style} textStyle={mainTextStyle} label="Day" disabled={month == 0} value={day} setValue={setDay} minValue={1} maxValue={getLastDayOfMonth(month)} />
+          </div>
+          <Button style={style} textStyle={mainTextStyle} handleClick={() => {
+            setDisplayResult(true);
+            storeBirthday();
+            scrollToResult();
+          }} disabled={day == 0 || month == 0}>
+            {day === 0 || month === 0 ? 'Select your birth date' : 'Find out your mashup'}
+          </Button>
+          <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
+            Switch to {style === 'TTPD' ? 'TLOAS' : 'TTPD'} theme
+          </Button>
+        </div>
+      </div >
+
+      {displayResult && (
+        <div id="result" className="flex flex-col items-center">
+          <div className="story-container">
+            <Card ref={storyCardRef} day={day} month={month} displayAnimation={displayAnimation} style={style} textStyle={mainTextStyle} variant="story" />
+          </div>
+          <Card ref={cardRef} day={day} month={month} displayAnimation={displayAnimation} style={style} textStyle={mainTextStyle} variant="card" />
+
+          <div className="flex flex-col gap-4 p-4 items-center">
+            <span className={`text-3xl text-center lg:text-5xl text-center ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font uppercase' : 'font-bold'}`}>Personalize and share your mashup!</span>
+            <div className="flex flex-col gap-3 pb-4 w-fit">
+              <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('square')}>
+                {downloading ? "Downloading..." : "Download image (Square)"}
+              </Button>
+              <Button disabled={downloading} style={style} textStyle={mainTextStyle} handleClick={() => handleDownload('story')}>
+                {downloading ? "Downloading..." : "Download image (Instagram Story)"}
+              </Button>
+              <Button style={style} textStyle={mainTextStyle} handleClick={handleChangeStyle}>
+                Switch to {style === 'TTPD' ? 'TLOAS' : 'TTPD'} style
+              </Button>
+              <Button style={style} textStyle={mainTextStyle} handleClick={() => setDisplayAnimation(!displayAnimation)}>
+                {displayAnimation ? 'Hide' : 'Display'} {style === 'TTPD' ? 'papers' : 'stars'}
+              </Button>
+              <div className="flex flex-col items-center w-full">
+                <span className={`${style === 'TTPD' ? sourceCodePro.className : `tloas-font ${mainTextStyle}`} uppercase mb-1 text-sm`}>
+                  Enjoyed this experience?
+                </span>
+                <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
+                  <a
+                    href="https://ko-fi.com/jrobsonjr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block text-center w-full py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${mainTextStyle} w-full uppercase sm:text-xl cursor-pointer`}>
+                    Buy me a coffee on Ko-Fi
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={`${style === 'TLOAS' ? 'tloas-card-border p-4' : 'ttpd-style mt-4'} relative w-fit mx-2 mb-8`}>
+            <div className={`flex flex-col items-center justify-center ${style === "TLOAS" ? 'tloas-style' : 'ttpd-card-border'}`}>
+              <div className="flex flex-col gap-1 px-8 py-4">
+                <span className={`mb-2 text-3xl text-center lg:text-5xl ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font' : 'font-bold'}`}>Credits</span>
+                <ul className="ml-4">
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Developed and designed by <b>JRobsonJr</b> (@SoftCircuits on X/Twitter)</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Inspired by a social media trend</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Song titles, album titles, and covers by Taylor Swift</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Icons from FontAwesome</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Floating papers inspired by Pixpine Mockups</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Floating star outlines from SVG Repo</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Glitter texture by Pierre Bamin (Unsplash)</li>
+                  <li className={style === 'TTPD' ? sourceCodePro.className : mainTextStyle}>Paper texture by Konstantin Ivanov (Transparent Textures)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div >
   );
 }

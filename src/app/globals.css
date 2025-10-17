@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --tloas-background: #deece6;
+  --tloas-foreground: #dd5d28;
+  --ttpda-background: #302b25;
+  --ttpda-foreground: #C9C4BF;
+  --tloas-accent: #1b7051;
+  --tloas-light-green: #5ba181;
 }
 
 @theme inline {
@@ -20,7 +26,389 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-oswald), sans-serif;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* SONG DISPLAY */
+
+.ttpd-border-simple {
+  border: 1px solid var(--ttpda-foreground);
+}
+
+.song-title {
+  font-size: 2.75rem;
+  line-height: 1;
+}
+
+/* FLOATING IMAGE */
+
+.floating-image {
+  z-index: 1;
+  animation: move 2s infinite both;
+  position: absolute;
+}
+
+/* CARD */
+
+.tloas-card-border {
+  background: url('/glitter-darkgreen2.jpg');
+  background-size: 50rem;
+  animation: animate 100s infinite;
+}
+
+.ttpd-card-border {
+  background-color: var(--ttpda-background);
+  color: var(--ttpda-foreground);
+  border: 1px solid var(--ttpda-foreground);
+  position: relative;
+  z-index: 1;
+}
+
+.ttpd-card-border::before {
+  content: '';
+  width: calc(100% - 30px);
+  height: calc(100% + 30px);
+
+  border: 1px solid var(--ttpda-foreground);
+  box-sizing: border-box;
+
+  position: absolute;
+  top: -15px;
+  left: 15px;
+  z-index: -1;
+}
+
+.tloas-card-bg {
+  background-color: var(--tloas-light-green);
+  background-image: url("/beige-paper.png");
+  position: relative;
+}
+
+.tloas-text-mask {
+  background: url('/glitter-darkgreen2.jpg') repeat;
+  background-size: 20rem;
+  color: var(--tloas-foreground);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate 100s infinite;
+}
+
+.tloas-font {
+  transform: skew(-10deg);
+}
+
+.tloas-accent {
+  color: var(--tloas-accent);
+}
+
+.ttpd-border {
+  background-color: var(--ttpda-background);
+  color: var(--ttpda-foreground);
+  border: 1px solid var(--ttpda-foreground);
+  position: relative;
+  z-index: 1;
+}
+
+.ttpd-border::before {
+  content: '';
+  width: calc(100% - 6px);
+  height: calc(100% + 8px);
+
+  border: 1px solid var(--ttpda-foreground);
+  box-sizing: border-box;
+
+  position: absolute;
+  top: -4px;
+  left: 3px;
+  z-index: -1;
+}
+
+.tloas-border {
+  background: url('/glitter-orange.jpg');
+  background-size: 20rem;
+  transform: skew(-10deg);
+  animation: animate 100s infinite;
+}
+
+.tloas-badge {
+  background-color: var(--tloas-accent);
+  transform: skew(-10deg);
+}
+
+.tloas-text,
+.tloas-style {
+  color: var(--tloas-foreground);
+}
+
+.tloas-bg,
+.tloas-style {
+  background-color: var(--tloas-background);
+}
+
+.ttpd-text {
+  color: var(--ttpda-foreground);
+  letter-spacing: -.5px;
+}
+
+.mashup-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0;
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.mashup-divider::before,
+.mashup-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.75;
+}
+
+@keyframes move-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(.5rem, .5rem);
+  }
+}
+
+@keyframes move-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-.5rem, .5rem);
+  }
+}
+
+@keyframes move-3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(.5rem, -.5rem);
+  }
+}
+
+@keyframes move-4 {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-.5rem, -.5rem);
+  }
+}
+
+.ttpd-style {
+  background: var(--ttpda-background);
+  color: var(--ttpda-foreground);
+}
+
+@keyframes animate {
+  0% {
+    background-position: left;
+  }
+
+  100% {
+    background-position: right;
+  }
+}
+
+.tloas-button {
+  background-color: var(--tloas-background);
+  transition: 0.5s;
+}
+
+button.tloas-button:hover {
+  background-color: transparent;
+  color: white;
+}
+
+.ttpd-button {
+  transition: 0.5s;
+  margin-bottom: .25rem;
+}
+
+.ttpd-button:hover {
+  background-color: var(--ttpda-foreground);
+  color: var(--ttpda-background);
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mashup-card {
+  transform: scale(.2);
+}
+
+.card-wrapper {
+  width: 20rem;
+  height: 20rem;
+  overflow: hidden;
+}
+
+.mashup-card > div {
+  width: 76rem;
+  height: 76rem;
+}
+
+.mashup-card-story > div {
+  width: 67.5rem;
+  height: 120rem;
+}
+
+.mashup-card-story {
+  transform: scale(.25);
+}
+
+@media (min-width: 22rem) {
+  .mashup-card {
+    transform: scale(.25);
+  }
+
+  .card-wrapper {
+    width: 22rem;
+    height: 22rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 26rem) {
+  .mashup-card {
+    transform: scale(.3);
+  }
+
+  .card-wrapper {
+    width: 26rem;
+    height: 26rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 28rem) {
+  .mashup-card {
+    transform: scale(.32);
+  }
+
+  .card-wrapper {
+    width: 28rem;
+    height: 28rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 32rem) {
+  .mashup-card {
+    transform: scale(.35);
+  }
+
+  .card-wrapper {
+    width: 32rem;
+    height: 32rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 40rem) {
+  .mashup-card {
+    transform: scale(.45);
+  }
+
+  .card-wrapper {
+    width: 40rem;
+    height: 40rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 48rem) {
+  .mashup-card {
+    transform: scale(.5);
+  }
+
+  .card-wrapper {
+    width: 48rem;
+    height: 48rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 60rem) {
+  .mashup-card {
+    transform: scale(.6);
+  }
+
+  .card-wrapper {
+    width: 60rem;
+    height: 60rem;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 200rem) {
+  .mashup-card {
+    transform: scale(.8);
+  }
+
+  .card-wrapper {
+    width: 80rem;
+    height: 80rem;
+    overflow: hidden;
+  }
+}
+
+.text-4-5xl {
+  font-size: 2.5rem;
+}
+
+.story-container {
+  position: absolute;
+  top: 0;
+  left: -9999px; 
+}
+
+ul {
+  list-style-type: disc;
+}
+
+#oii {
+  background-image: url("/ttpd-anthology.png");
+  width: 300;
+  height: 300;
 }
