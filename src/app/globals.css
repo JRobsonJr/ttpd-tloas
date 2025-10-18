@@ -249,7 +249,7 @@ button {
   }
 }
 
-.tloas-button {
+.tloas-button, .tloas-input {
   background-color: var(--tloas-background);
   transition: 0.5s;
 }

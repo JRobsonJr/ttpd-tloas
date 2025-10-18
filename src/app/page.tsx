@@ -60,24 +60,6 @@ export default function Home() {
   return (
     <div className={`items-center justify-items-center ${style === 'TLOAS' ? 'tloas-style' : 'ttpd-style'}`}>
       <div className="flex flex-col gap-8 items-center justify-center min-h-screen p-4">
-        <div className="flex flex-col hidden sm:visible gap-4">
-          <Image
-            src="/ttpd_anthology.jpg"
-            alt="TTPD Anthology album cover"
-            width={300}
-            height={300}
-            priority
-            className={style === "TTPD" ? "ttpd-border-simple" : ""}
-          />
-          <Image
-            src="/tloas.jpg"
-            alt="TLOAS album cover"
-            width={300}
-            height={300}
-            priority
-          />
-        </div>
-
         <span className={`text-2xl text-center sm:text-5xl lg:text-7xl ${mainTextStyle} ${style === 'TLOAS' ? 'tloas-text-mask tloas-font uppercase' : 'font-bold'}`}>Everyone has a birthday <br /> TTPD x TLOAS mashup.</span>
 
         <div className="flex flex-col gap-3">

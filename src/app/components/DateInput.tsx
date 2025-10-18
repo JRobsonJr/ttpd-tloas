@@ -18,7 +18,7 @@ const DateInput = ({ value, setValue, label, minValue, maxValue, disabled, textS
     <div className="flex flex-col items-center justify-center gap-1">
         <label className={`text-sm ${textStyle} ${style === 'TLOAS' ? 'tloas-text-mask' : ''}`}>{label}</label>
         <div className={style === 'TLOAS' ? "tloas-border p-1" : ""}>
-            <div className={`flex ${style === 'TTPD' ? 'ttpd-border' : 'tloas-button'} ${textStyle} text-xl sm:text-4xl`}>
+            <div className={`flex ${style === 'TTPD' ? 'ttpd-border' : 'tloas-input'} ${textStyle} text-xl sm:text-4xl`}>
                 <button disabled={disabled} onClick={() => setValue(value <= minValue ? maxValue : value - 1)} className={`px-4 ${style === 'TLOAS' ? 'tloas-text-mask' : ''}`}><Minus /></button>
                 <input type="number" disabled={disabled} min="1" max="12" value={value} className={`text-center w-[2rem] sm:w-[6rem] py-2 ${style === 'TLOAS' ? 'tloas-text-mask' : ''} outline-none`} onChange={(e) => setValue(e.target.value as unknown as number)} onBlur={() => {
                     if (isNaN(Number(value))) {
