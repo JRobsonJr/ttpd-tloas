@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "TTPD x TLOAS Mashup",
@@ -18,6 +20,8 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <Analytics />
+      <SpeedInsights />
     </html>
   );
 }

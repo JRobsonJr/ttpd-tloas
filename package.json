@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@next/env": "^15.5.6",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "form-data": "^4.0.4",
     "html-to-image": "^1.11.13",
     "imagekit": "^6.0.0",
