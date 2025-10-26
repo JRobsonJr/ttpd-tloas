@@ -130,6 +130,36 @@ export default function Home() {
 
               <div className="flex flex-col items-center w-full">
                 <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
+                  Follow me on social media for more like this!
+                </span>
+
+                <div className={`flex grid grid-cols-2 gap-2 w-full`}>
+                  <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
+                    <a
+                      href="https://instagram.com/jrobsonjr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block text-center w-full py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${mainTextStyle} w-full uppercase sm:text-xl cursor-pointer`}>
+                      Instagram
+                    </a>
+                  </div>
+
+                  <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
+                    <a
+                      href="https://tiktok.com/@jrobsonjr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block text-center w-full py-1 px-4 m:px-10 ${style === 'TTPD' ? 'ttpd-button ttpd-border' : 'tloas-button'} ${mainTextStyle} w-full uppercase sm:text-xl cursor-pointer`}>
+                      TikTok
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <hr className="my-4 opacity-50" />
+
+              <div className="flex flex-col items-center w-full">
+                <span className={`${style === 'TTPD' ? `${sourceCodePro.className} mb-2` : `tloas-font ${mainTextStyle} mb-1`} uppercase text-sm`}>
                   Enjoyed this experience?
                 </span>
                 <div className={style === 'TLOAS' ? "tloas-border p-1 w-full" : "w-full"}>
