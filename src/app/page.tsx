@@ -9,6 +9,7 @@ import Card from "./components/Card";
 import DateInput from "./components/DateInput";
 import SocialMediaShareButton from "./components/SocialMediaShareButton";
 import Button from "./components/Button";
+import { track } from "@vercel/analytics";
 
 export default function Home() {
   const [month, setMonth] = useState<number>(1);
@@ -68,6 +69,7 @@ export default function Home() {
             <DateInput style={style} textStyle={mainTextStyle} label="Day" disabled={month == 0} value={day} setValue={setDay} minValue={1} maxValue={getLastDayOfMonth(month)} />
           </div>
           <Button style={style} textStyle={mainTextStyle} handleClick={() => {
+            track('Birthday', { day, month });
             setDisplayResult(true);
             scrollToResult();
           }} disabled={day == 0 || month == 0}>
