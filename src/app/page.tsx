@@ -69,7 +69,7 @@ export default function Home() {
             <DateInput style={style} textStyle={mainTextStyle} label="Day" disabled={month == 0} value={day} setValue={setDay} minValue={1} maxValue={getLastDayOfMonth(month)} />
           </div>
           <Button style={style} textStyle={mainTextStyle} handleClick={() => {
-            track('Birthday', { day, month });
+            track('Birthday', { day, month, date: `${day}-${month}` });
             setDisplayResult(true);
             scrollToResult();
           }} disabled={day == 0 || month == 0}>
